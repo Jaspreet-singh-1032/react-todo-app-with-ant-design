@@ -6,15 +6,19 @@ import ItemsList from "./ItemsList";
 const Todo = () => {
   const [name, setName] = useState("");
   const [todos, setTodos] = useState([]);
-  const enterPressed = (e) => {
-    if (name) {
+
+  const removeItem = (id) => {
+    setTodos(todos.filter((item) => item.id !== id));
+  };
+  const enterPressed = () => {
+    if (name && name.trim()) {
       setTodos([...todos, { id: new Date().getTime().toString(), name }]);
       setName("");
     }
   };
   return (
     <div className="main">
-      <h1>Things To Do</h1>
+      <h1 style={{ textAlign: "center" }}>Things To Do</h1>
       <div className="add-item">
         <Input
           placeholder="Add new"
@@ -24,7 +28,7 @@ const Todo = () => {
         />
       </div>
       <div className="items-list">
-        <ItemsList items={todos} />
+        <ItemsList items={todos} removeItem={removeItem} />
       </div>
     </div>
   );
